@@ -1,0 +1,23 @@
+{
+  "name": "mysql-amazonstorefront",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aschulte1919/node-mysql-amazonStoreFront.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aschulte1919/node-mysql-amazonStoreFront/issues"
+  },
+  "homepage": "https://github.com/aschulte1919/node-mysql-amazonStoreFront#readme",
+  "dependencies": {
+    "inquirer": "^6.1.0",
+    "mysql": "^2.16.0"
+  }
+}
