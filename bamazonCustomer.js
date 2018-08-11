@@ -1,7 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-// create the connection information for the sql database
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -10,7 +9,6 @@ var connection = mysql.createConnection({
     database: "bamazon"
 });
 
-// connect to the mysql server and sql database
 connection.connect(function (err) {
     if (err) throw err;
     displayData();
@@ -24,52 +22,41 @@ function displayData() {
                 "Product name: " + res[i].product_name + " | " +
                 "Department: " + res[i].department_name + " | " +
                 "Price: " + res[i].price + " | " +
-                "Quantity in stock: " + res[i].stock_quantity);
-            console.log("------------------------------------------------------------------");
+                "Quantity in stock: " + res[i].stock_quantity)
         };
+        console.log("------------------------------------------------------------------");
+        itemSelection();
     })
-    itemSelection();
 };
 
 function itemSelection() {
     inquirer
-        .prompt({
+        .prompt([{
             name: "userItemID",
-            type: "rawlist",
+            type: "input",
             message: "What item ID would you like to select?"
         }, {
             name: "userQuantity",
             type: "input",
             message: "How many of the item would you like?"
-        })
+        }])
         .then(function (answer) {
-            // based on their answer, either call the bid or the post functions
-            if (answer.userQuantity >= stock_quantity) {
-                console.log("Insuficient quantity to meet your demand");
-                console.log("------------------------------------------------------------------");
-            } else {
-                var updatedQuantity = stock_quantity - answer.userQuantity;
-
-                connection.query(
-                    "UPDATE products SET ? WHERE ?", [{
-                        stock_quantity: updatedQuantity
-                    }])
-            
-                connection.query("SELECT * FROM products", function (err, res) {
-                    if (err) throw err;
-                    console.log("Item ID: " + answer.item_id + " | " +
-                        "Updated items in stock" + answer.stock_quantity);
-                    displayPrice();
-                })
-            }
-        });
-};
-
-function displayPrice() {
-    // display new price-- need to get the price from the id and multiply it by the answer.stock_quantity
-
-
-
-
-    console.log(" | " + "Your total price: "   ); 
+            connection.query("SELECT * FROM products WHERE ?", {
+                item_id: answer.userItemID
+            }, function (err, res) {
+                if (err) throw err;
+                if (answer.userQuantity < res[0].stock_quantity) {
+                    connection.query("UPDATE products SET stock_quantity = " + (res[0].stock_quantity - answer.userQuantity) + " WHERE item_id = " + answer.item_id, function (err, data) {
+                        if (err) throw err;
+                        console.log("Your total is $" + res[0].price * answer.userQuantity);
+                        console.log("\n---------------------------------------------------------------------\n");
+                        displayData();
+                        connection.end();
+                    })
+                } else {
+                    console.log("Sorry, we do not have enough items to fulfill your request.");
+                    console.log("\n---------------------------------------------------------------------\n");
+                }
+            })
+        })
 };
