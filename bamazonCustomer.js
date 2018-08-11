@@ -46,11 +46,17 @@ function itemSelection() {
             }, function (err, res) {
                 if (err) throw err;
                 if (answer.userQuantity < res[0].stock_quantity) {
-                    connection.query("UPDATE products SET stock_quantity = " + (res[0].stock_quantity - answer.userQuantity) + " WHERE item_id = " + answer.item_id, function (err, data) {
+                    connection.query("UPDATE products SET stock_quantity = " + (res[0].stock_quantity - answer.userQuantity) + " WHERE item_id = " + answer.userItemID, function (err, data) {
                         if (err) throw err;
                         console.log("Your total is $" + res[0].price * answer.userQuantity);
                         console.log("\n---------------------------------------------------------------------\n");
-                        displayData();
+                        console.log("Item ID: " + res[0].item_id + " | " +
+                        "Product name: " + res[0].product_name + " | " +
+                        "Department: " + res[0].department_name + " | " +
+                        "Price: " + res[0].price + " | " +
+                        "Updated quantity in stock: " + res[0].stock_quantity);
+                        console.log("\n---------------------------------------------------------------------\n");
+                        console.log("Your total is $" + res[0].price * answer.userQuantity);
                         connection.end();
                     })
                 } else {
