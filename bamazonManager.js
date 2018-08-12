@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "",
+    password: "pmakA0402",
     database: "bamazon"
 });
 
@@ -23,19 +23,19 @@ function start() {
             choices: ["View Products for Sale", "View Low Inventory", "Add to Inventory", "Add New Product"]
         })
         .then(function (answer) {
-            if (answer.choices === choices[0]) {
+            if (answer.userSelection === "View Products for Sale") {
                 viewProducts();
             }
 
-            if (answer.choices === choices[1]) {
+            if (answer.userSelection === "View Low Inventory") {
                 viewLowInventory();
             }
 
-            if (answer.choices === choices[2]) {
+            if (answer.userSelection === "Add to Inventory") {
                 addInventory();
             }
 
-            if (answer.choices === choices[3]) {
+            if (answer.userSelection === "Add New Product") {
                 addProduct();
             }
 
@@ -48,7 +48,6 @@ function viewProducts() {
             console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity);
         }
         console.log("-----------------------------------------------------");
-        //start();
         connection.end();
     });
 };
@@ -59,7 +58,6 @@ function viewLowInventory() {
             console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity);
         };
         console.log("-----------------------------------------------------");
-        //start();
         connection.end();
     });
 };
