@@ -11,12 +11,12 @@ First open the relative path you have cloned the repo to and run node (applicati
 
 ### customerjs...
 The user will be promted what item ID they would like to access.
-![Screenshot of  Customer ](/assets/manager1.png)
+![Screenshot of  Customer ](/assets/customer1.png)
 
 Next the user will be prompted the quantity of the item they have selected. 
-![Screenshot of  Customer ](/assets/manager2.png)
+![Screenshot of  Customer ](/assets/customerr2.png)
 
 Finally the terminal will display the quantity the user bought and the cost as well as the updated item.  It will also update the database accordingly.
-![Screenshot of  Customer ](/assets/manager3.png)
+![Screenshot of  Customer ](/assets/customer3.png)
 
 ### managerjs...
